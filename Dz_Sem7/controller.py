@@ -3,9 +3,9 @@ import view
 import model
 
 def start():
-    chice=''
+    choice = ''
     while True:
-        choice=view.main_menu()
+        choice = view.main_menu()
         match choice:
             case 1:
                 model.open_file()
@@ -23,7 +23,7 @@ def start():
                     confirm= view.delete_confirm(contact[0][0][0])
                     if confirm:
                         model.delete_contact(contact[0][0])
-                elif contact ==[]:
+                elif contact == []:
                     view.empty_request()
                 else:
                     view.many_request()

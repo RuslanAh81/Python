@@ -3,7 +3,7 @@ import model
 
 def main_menu():
     print('Меню: ')
-    for i,item in enumerate(commands,1):
+    for i, item in enumerate(commands, 1):
         print(f'\t{i}.{item}')
     while True:
         try:
@@ -46,7 +46,7 @@ def change_contact():
 
 def delete_confirm(contact:str):
     result = input(f'Вы действительно хотите удалить {contact}?(y/n)').lower()
-    if result=='y':
+    if result == 'y':
         return True
     else:
         return False
