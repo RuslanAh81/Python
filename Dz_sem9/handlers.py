@@ -40,30 +40,29 @@ async def mes_settings(message: types.Message):
 
 @dp.message_handler()
 async def take(message: types.Message):
+    name = message.from_user.first_name
     global total
     if message.text.isdigit():
         take = int(message.text)
-        if take>28:
-            await message.answer('Что так много берешь? Бери меньше 29')
-        if take<0:
-            await message.answer('Ну... это не серьезно, возьми хотябы одну')
-        else:
-            temp_total = total-take
-        if temp_total == 0:
-            await message.answer('Для Бота не осталось конфет.Ты выиграл')
-        elif temp_total>28:
-            bot_step= randint(1, 28)
-            total = temp_total-bot_step
-            await message.answer(f'Осталось{temp_total} конфет.Бот берет {bot_step} конфет. На столе осталось {total} конфет')
-        else:
-            bot_step= randint(1,temp_total+1)
-            total = temp_total - bot_step
-            if total == 0:
-                await message.answer(f'Осталось {temp_total} конфет. Бот берет {bot_step}. Бот выиграл')
+
+        temp_total = total - take
+        if (0 < take < 29) and take <= total:
+            await message.answer(f'{name} Взял {take} конфет и на столе осталось {temp_total} конфет. Ходит Бот')
+            if temp_total <= 0:
+                await message.answer(f'Боту не осталось конфет {name} выиграл')
+            elif temp_total > 28:
+                bot_turn = randint(1, 28)
+                total = temp_total - bot_turn
+                await message.answer(f'Бот взял {bot_turn} конфет осталось {total} конфет\n Сколько возьмешь?')
             else:
-                await message.answer(f'Осталось {temp_total} конфет. Бот берет {bot_step}.На столе осталось{total} конфет')
-    else:
-        await message.answer('Чтобы вызвать помощь, введите /help')
+                bot_turn = randint(1, temp_total)
+                total = temp_total - bot_turn
+                await message.answer(f'Бот взял {bot_turn} конфет осталось {total} конфет\n Сколько возьмешь?')
+                if total <= 0:
+                    await message.answer('Бот победил')
+        else:
+            await message.answer('Что то ты много взял!!')
+
 
 
 
